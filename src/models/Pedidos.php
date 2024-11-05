@@ -17,6 +17,7 @@ class Pedidos
         $stmt->bindParam(':id_produto', $id_produto);
         $stmt->bindParam(':quantidade', $quantidade);
         $stmt->bindParam(':data_pedido', $data_pedido);
+        $stmt->bindParam(':preco', $preco);
         return $stmt->execute();
     }
 
@@ -51,7 +52,7 @@ class Pedidos
 
     public function delete($id)
     {
-        $sql = "DELETE FROM produtos WHERE id = :id";
+        $sql = "DELETE FROM pedidos WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();

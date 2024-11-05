@@ -15,9 +15,9 @@ class Produtos
         $sql = "INSERT INTO produtos (name,descricao,quantidade,preco) VALUES (:name, :descricao, :quantidade, :preco)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':email', $descricao);
-        $stmt->bindParam(':name', $quantidade);
-        $stmt->bindParam(':email', $preco);
+        $stmt->bindParam(':descricao', $descricao);
+        $stmt->bindParam(':quantidade', $quantidade);
+        $stmt->bindParam(':preco', $preco);
         return $stmt->execute();
     }
 
@@ -40,7 +40,7 @@ class Produtos
 
     public function update($id, $name, $descricao,$quantidade, $preco)
     {
-        $sql = "UPDATE produtos SET name = :name, descricao = :descricao WHERE id = :id";
+        $sql = "UPDATE produtos SET name = :name, descricao = :descricao, quantidade = :quantidade, preco = :preco WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':name', $name);

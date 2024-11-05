@@ -19,15 +19,15 @@ class PedidosController
     public function create()
     {
         $data = json_decode(file_get_contents("php://input"));
-        if (isset($data->name) && isset($data->email)) {
+        if (isset($data->id_produto) && isset($data->quantidade)&& isset($data->data_pedido)) {
             try {
-                $this->user->create($data->name, $data->email);
+                $this->user->create($data->id_produto, $data->quantidade,$data->data_pedido);
 
                 http_response_code(201);
-                echo json_encode(["message" => "Usuário criado com sucesso."]);
+                echo json_encode(["message" => "Pedido criado com sucesso."]);
             } catch (\Throwable $th) {
                 http_response_code(500);
-                echo json_encode(["message" => "Erro ao criar o usuário."]);
+                echo json_encode(["message" => "Erro ao criar o pedido."]);
             }
         } else {
             http_response_code(400);
@@ -39,16 +39,16 @@ class PedidosController
     {
         if (isset($id)) {
             try {
-                $user = $this->user->getById($id);
-                if ($user) {
-                    echo json_encode($user);
+                $pedidos = $this->pedidos->getById($id);
+                if ($pedidos) {
+                    echo json_encode($pedidos);
                 } else {
                     http_response_code(404);
-                    echo json_encode(["message" => "Usuário não encontrado."]);
+                    echo json_encode(["message" => "Pedido não encontrado."]);
                 }
             } catch (\Throwable $th) {
                 http_response_code(500);
-                echo json_encode(["message" => "Erro ao buscar o usuário."]);
+                echo json_encode(["message" => "Erro ao buscar o pedido."]);
             }
         } else {
             http_response_code(400);
@@ -59,19 +59,19 @@ class PedidosController
     public function update()
     {
         $data = json_decode(file_get_contents("php://input"));
-        if (isset($data->id) && isset($data->name) && isset($data->email)) {
+        if (isset($data->id) && isset($data->id_produto) && isset($data->quantidade) && isset($data->data_pedido)) {
             try {
-                $count = $this->user->update($data->id, $data->name, $data->email);
+                $count = $this->pedidos->update($data->id, $data->id_produto, $data->quantidade, $data->data_pedido);
                 if ($count > 0) {
                     http_response_code(200);
-                    echo json_encode(["message" => "Usuário atualizado com sucesso."]);
+                    echo json_encode(["message" => "Pedido atualizado com sucesso."]);
                 } else {
                     http_response_code(500);
-                    echo json_encode(["message" => "Erro ao atualizar o usuário."]);
+                    echo json_encode(["message" => "Erro ao atualizar o pedido."]);
                 }
             } catch (\Throwable $th) {
                 http_response_code(500);
-                echo json_encode(["message" => "Erro ao atualizar o usuário."]);
+                echo json_encode(["message" => "Erro ao atualizar o pedido."]);
             }
         } else {
             http_response_code(400);
@@ -84,18 +84,18 @@ class PedidosController
         $data = json_decode(file_get_contents("php://input"));
         if (isset($data->id)) {
             try {
-                $count = $this->user->delete($data->id);
+                $count = $this->pedidos->delete($data->id);
 
                 if ($count > 0) {
                     http_response_code(200);
-                    echo json_encode(["message" => "Usuário deletado com sucesso."]);
+                    echo json_encode(["message" => "Pedido deletado com sucesso."]);
                 } else {
                     http_response_code(500);
-                    echo json_encode(["message" => "Erro ao deletar o usuário."]);
+                    echo json_encode(["message" => "Erro ao deletar o pedido."]);
                 }
             } catch (\Throwable $th) {
                 http_response_code(500);
-                echo json_encode(["message" => "Erro ao deletar o usuário."]);
+                echo json_encode(["message" => "Erro ao deletar o pedido."]);
             }
         } else {
             http_response_code(400);
