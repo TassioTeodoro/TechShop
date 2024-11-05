@@ -21,6 +21,9 @@ TechShop é site de vendas especializado em perifericos e peças para computador
 - Tassio Henrique Teodoro Pereira 
 - RGM: 802.385
 
+## Link do Drawio
+
+https://app.diagrams.net/#G1iUfdWbfpm52jChBT10jUp1neV3i7_gG7#%7B%22pageId%22%3A%22UGfwJ_zjDmBLUVvbDB_g%22%7D
 
 
 
