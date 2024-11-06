@@ -19,15 +19,15 @@ class ProdutosController
     public function create()
     {
         $data = json_decode(file_get_contents("php://input"));
-        if (isset($data->name) && isset($data->email)) {
+        if (isset($data->name) && isset($data->descricao) && isset($data->quantidade) && isset($data->preco)) {
             try {
-                $this->user->create($data->name, $data->email);
+                $this->produtos->create($data->name, $data->descricao, $data->quantidade, $data->preco);
 
                 http_response_code(201);
-                echo json_encode(["message" => "Usuário criado com sucesso."]);
+                echo json_encode(["message" => "Produto criado com sucesso."]);
             } catch (\Throwable $th) {
                 http_response_code(500);
-                echo json_encode(["message" => "Erro ao criar o usuário."]);
+                echo json_encode(["message" => "Erro ao criar o produto."]);
             }
         } else {
             http_response_code(400);
@@ -39,16 +39,16 @@ class ProdutosController
     {
         if (isset($id)) {
             try {
-                $user = $this->user->getById($id);
-                if ($user) {
-                    echo json_encode($user);
+                $produto = $this->produtos->getById($id);
+                if ($produto) {
+                    echo json_encode($produto);
                 } else {
                     http_response_code(404);
-                    echo json_encode(["message" => "Usuário não encontrado."]);
+                    echo json_encode(["message" => "Produto não encontrado."]);
                 }
             } catch (\Throwable $th) {
                 http_response_code(500);
-                echo json_encode(["message" => "Erro ao buscar o usuário."]);
+                echo json_encode(["message" => "Erro ao buscar o produto."]);
             }
         } else {
             http_response_code(400);
@@ -59,19 +59,19 @@ class ProdutosController
     public function update()
     {
         $data = json_decode(file_get_contents("php://input"));
-        if (isset($data->id) && isset($data->name) && isset($data->email)) {
+        if (isset($data->id) && isset($data->name) && isset($data->descricao) && isset($data->quantidade) && isset($data->preco)) {
             try {
-                $count = $this->user->update($data->id, $data->name, $data->email);
+                $count = $this->produtos->update($data->id, $data->name, $data->descricao, $data->quantidade, $data->preco);
                 if ($count > 0) {
                     http_response_code(200);
-                    echo json_encode(["message" => "Usuário atualizado com sucesso."]);
+                    echo json_encode(["message" => "Produto atualizado com sucesso."]);
                 } else {
                     http_response_code(500);
-                    echo json_encode(["message" => "Erro ao atualizar o usuário."]);
+                    echo json_encode(["message" => "Erro ao atualizar o produto."]);
                 }
             } catch (\Throwable $th) {
                 http_response_code(500);
-                echo json_encode(["message" => "Erro ao atualizar o usuário."]);
+                echo json_encode(["message" => "Erro ao atualizar o produto."]);
             }
         } else {
             http_response_code(400);
@@ -79,23 +79,21 @@ class ProdutosController
         }
     }
 
-    public function delete()
+    public function delete($id)
     {
-        $data = json_decode(file_get_contents("php://input"));
-        if (isset($data->id)) {
+        if (isset($id)) {
             try {
-                $count = $this->user->delete($data->id);
-
+                $count = $this->produtos->delete($id);
                 if ($count > 0) {
                     http_response_code(200);
-                    echo json_encode(["message" => "Usuário deletado com sucesso."]);
+                    echo json_encode(["message" => "Produto deletado com sucesso."]);
                 } else {
                     http_response_code(500);
-                    echo json_encode(["message" => "Erro ao deletar o usuário."]);
+                    echo json_encode(["message" => "Erro ao deletar o produto."]);
                 }
             } catch (\Throwable $th) {
                 http_response_code(500);
-                echo json_encode(["message" => "Erro ao deletar o usuário."]);
+                echo json_encode(["message" => "Erro ao deletar o produto."]);
             }
         } else {
             http_response_code(400);

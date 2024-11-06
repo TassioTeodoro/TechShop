@@ -38,10 +38,11 @@ class Pedidos
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update($id_produto,$quantidade, $data_pedido, $preco)
+    public function update($id,$id_produto,$quantidade, $data_pedido, $preco)
     {
-        $sql = "UPDATE pedidos SET id_produto = :id_produto, quantidade = :quantidade, data_pedido = :data_pedido, preco = :preco  WHERE id_produto = :id_produto";
+        $sql = "UPDATE pedidos SET id_produto = :id_produto, quantidade = :quantidade, data_pedido = :data_pedido, preco = :preco  WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id);
         $stmt->bindParam(':id_produto', $id_produto);
         $stmt->bindParam(':quantidade', $quantidade);
         $stmt->bindParam(':data_pedido', $data_pedido);
