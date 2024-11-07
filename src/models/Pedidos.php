@@ -10,14 +10,13 @@ class Pedidos
         $this->conn = $db;
     }
 
-    public function create($id_produto, $quantidade, $data_pedido, $preco)
+    public function create($id_produto, $quantidade, $data_pedido)
     {
         $sql = "INSERT INTO pedidos (id_produto,quantidade,data_pedido) VALUES (:id_produto, :quantidade, :data_pedido)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id_produto', $id_produto);
         $stmt->bindParam(':quantidade', $quantidade);
         $stmt->bindParam(':data_pedido', $data_pedido);
-        $stmt->bindParam(':preco', $preco);
         return $stmt->execute();
     }
 
@@ -38,15 +37,14 @@ class Pedidos
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update($id,$id_produto,$quantidade, $data_pedido, $preco)
+    public function update($id,$id_produto,$quantidade, $data_pedido)
     {
-        $sql = "UPDATE pedidos SET id_produto = :id_produto, quantidade = :quantidade, data_pedido = :data_pedido, preco = :preco  WHERE id = :id";
+        $sql = "UPDATE pedidos SET id_produto = :id_produto, quantidade = :quantidade, data_pedido = :data_pedido  WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':id_produto', $id_produto);
         $stmt->bindParam(':quantidade', $quantidade);
         $stmt->bindParam(':data_pedido', $data_pedido);
-        $stmt->bindParam(':preco', $preco);
         $stmt->execute();
         return $stmt->rowCount();
     }
