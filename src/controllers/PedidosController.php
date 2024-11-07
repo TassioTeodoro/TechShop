@@ -21,7 +21,7 @@ class PedidosController
         $data = json_decode(file_get_contents("php://input"));
         if (isset($data->id_produto) && isset($data->quantidade)&& isset($data->data_pedido)) {
             try {
-                $this->pedidos->create($data->id_produto, $data->quantidade,$data->data_pedido);
+                $this->pedidos->create(id_produto: $data->id_produto, $data->quantidade,$data->data_pedido);
 
                 http_response_code(201);
                 echo json_encode(["message" => "Pedido criado com sucesso."]);

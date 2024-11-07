@@ -2,7 +2,7 @@
 $host = 'localhost';
 $db = 'api_db';
 $user = 'root';
-$pass = 'password';
+$pass = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
