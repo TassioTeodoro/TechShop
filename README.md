@@ -16,6 +16,11 @@ TechShop é site de vendas especializado em perifericos e peças para computador
 - Bootstrap 
 - CSS
 
+## Rotas()
+
+http://localhost:8080/src/api/produtos
+http://localhost:8080/src/api/pedidos
+
 ## Autor
 
 - Tassio Henrique Teodoro Pereira 
