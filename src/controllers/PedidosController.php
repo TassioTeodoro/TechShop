@@ -1,5 +1,5 @@
 <?php
-require_once '../models/Pedidos.php';
+require_once 'src/models/Pedidos.php';
 
 class PedidosController
 {
