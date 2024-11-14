@@ -18,7 +18,6 @@ $router->add('delete', '/produtos/{id}', [$ProdutosController, 'delete']);
 $router->add('put', '/produtos/{id}', [$ProdutosController, 'update']);
 
 
-
 $router->add('get', '/pedidos', [$PedidosController, 'list']);
 $router->add('get', '/pedidos/{id}', [$PedidosController, 'getById']);
 $router->add('post', '/pedidos', [$PedidosController, 'create']);
