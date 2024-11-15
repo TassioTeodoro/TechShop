@@ -4,29 +4,31 @@ require_once 'src/controllers/ProdutosController.php';
 require_once 'src/controllers/PedidosController.php';
 require_once 'src/Router.php';
 
-header("Content-type: application/json; charset=UTF-8");
+$router = Router::getInstance();
 
-$router = new Router();
+$router->add('GET', '/produtos', function () { 
+    if(isset($_GET["id"])){
+        ProdutosController::getInstance()->getById($_GET["id"]);
+    } else {
+        ProdutosController::getInstance()->list();
+    }
+});
 
-$ProdutosController = new ProdutosController($pdo);
-$PedidosController = new PedidosController($pdo);
+$router->add('POST', '/produtos', function () { ProdutosController::getInstance()->create();});
+$router->add('DELETE', '/produtos', function () { ProdutosController::getInstance()->delete();});
+$router->add('PUT', '/produtos', function () { ProdutosController::getInstance()->update();});
 
-$router->add('get', '/produtos', [$ProdutosController, 'list']);
-$router->add('get', '/produtos/{id}', [$ProdutosController, 'getById']);
-$router->add('post', '/produtos', [$ProdutosController, 'create']);
-$router->add('delete', '/produtos/{id}', [$ProdutosController, 'delete']);
-$router->add('put', '/produtos/{id}', [$ProdutosController, 'update']);
+$router->add('GET', '/pedidos', function () { 
+    if(isset($_GET["id"])){
+        PedidosController::getInstance()->getById($_GET["id"]);
+    } else {
+        PedidosController::getInstance()->list();
+    }
+});
 
+$router->add('POST', '/pedidos', function () { PedidosController::getInstance()->create();});
+$router->add('DELETE', '/pedidos', function () { PedidosController::getInstance()->delete();});
+$router->add('PUT', '/pedidos', function () { PedidosController::getInstance()->update();});
 
-$router->add('get', '/pedidos', [$PedidosController, 'list']);
-$router->add('get', '/pedidos/{id}', [$PedidosController, 'getById']);
-$router->add('post', '/pedidos', [$PedidosController, 'create']);
-$router->add('delete', '/pedidos/{id}', [$PedidosController, 'delete']);
-$router->add('put', '/pedidos/{id}', [$PedidosController, 'update']);
-
-$requestedPath = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-
-$method = $_SERVER['REQUEST_METHOD'];
-
-$router->dispatch($requestedPath, $method);
+Router::getInstance()->process();
 

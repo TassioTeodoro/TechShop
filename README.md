@@ -19,7 +19,7 @@ TechShop é site de vendas especializado em perifericos e peças para computador
 ## Rotas
 
 http://localhost:8080/src/public/pages/produtos.html
-http://localhost:8080/src/api/pedidos
+http://localhost:8080/src/public/pages/pedidos.html
 
 ## Autor
 

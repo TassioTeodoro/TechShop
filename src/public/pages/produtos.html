@@ -1,48 +1,37 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tela Produtos</title>
+    <title>Cadastrar Produto</title>
     <link rel="stylesheet" href="../css/style-produtos.css">
-    
+    <script src="../js/script-produtos.js"></script>
 </head>
+
 <body>
+    <div class="container">
+        <header>
+            <h1>Cadastrar Novo Produto</h1>
+        </header>
+        <main>
+            <form>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" placeholder="Ex: Teclado Gamer" required>
 
-<div class="container">
-    <h1>Cadastro de Produtos</h1>
+                <label for="descricao">Descrição:</label>
+                <input type="text" id="descricao" placeholder="Ex: Teclado RGB com iluminação LED" required>
 
-    <form id="product-form">
-        <input type="hidden" id="product-id">
-        <label for="name">Nome do Produto:</label>
-        <input type="text" id="name" required>
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" id="quantidade" placeholder="Ex: 10" required>
 
-        <label for="description">Descrição:</label>
-        <input type="text" id="description" required>
+                <label for="preco">Preço:</label>
+                <input type="number" id="preco" placeholder="Ex: 150.00" step="0.01" required>
 
-        <label for="price">Preço:</label>
-        <input type="number" id="price" required step="0.01" min="0">
-
-        <button type="submit">Salvar</button>
-        <button type="button" onclick="clearForm()">Cancelar</button>
-    </form>
-
-    
-    <h2>Lista de Produtos</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Preço</th>
-            </tr>
-        </thead>
-        <tbody id="product-list">
-        </tbody>
-    </table>
-</div>
-
-<script src="../js/script-produtos.js" defer></script>
+                <button type="button" onclick="detectType()">Salvar Produto</button>
+            </form>
+        </main>
+    </div>
 </body>
+
 </html>

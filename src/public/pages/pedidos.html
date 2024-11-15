@@ -1,16 +1,33 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedidos</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Cadastrar Pedido</title>
+    <link rel="stylesheet" href="../css/style-pedidos.css">
+    <script src="../js/script-pedidos.js"></script>
 </head>
+
 <body>
-    <h1>Lista de Produtos para Comprar</h1>
-    <div id="produtos-lista">
-        <!-- Produtos serão carregados dinamicamente aqui -->
+    <div class="container">
+        <header>
+            <h1>Cadastrar Novo Pedido</h1>
+        </header>
+        <main>
+            <form>
+                <label for="produto">Produto:</label>
+                <select id="produto" required>
+                    <!-- Produtos serão carregados dinamicamente -->
+                </select>
+
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" id="quantidade" placeholder="Ex: 3" required>
+
+                <button type="button" onclick="registrarPedido()">Salvar Pedido</button>
+            </form>
+        </main>
     </div>
-    <script src="../js/pedidos.js"></script>
 </body>
+
 </html>

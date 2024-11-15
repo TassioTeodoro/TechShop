@@ -5,9 +5,18 @@ class ProdutosController
 {
     private $produtos;
 
-    public function __construct($db)
+    private static $INSTANCE;
+
+    public static function getInstance(){
+        if(!isset(self::$INSTANCE)){
+            self::$INSTANCE = new ProdutosController();
+        }
+        return self::$INSTANCE;
+    }
+
+    public function __construct()
     {
-        $this->produtos = new Produtos($db);
+        $this->produtos = new Produtos(Database::getInstance());
     }
 
     public function list()
@@ -26,8 +35,10 @@ class ProdutosController
                 http_response_code(201);
                 echo json_encode(["message" => "Produto criado com sucesso."]);
             } catch (\Throwable $th) {
+                print_r($th);
                 http_response_code(500);
                 echo json_encode(["message" => "Erro ao criar o produto."]);
+                
             }
         } else {
             http_response_code(400);
@@ -79,8 +90,9 @@ class ProdutosController
         }
     }
 
-    public function delete($id)
+    public function delete()
     {
+        $data = json_decode(file_get_contents("php://input"));
         if (isset($id)) {
             try {
                 $count = $this->produtos->delete($id);

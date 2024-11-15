@@ -4,10 +4,18 @@ require_once 'src/models/Pedidos.php';
 class PedidosController
 {
     private $pedidos;
+    private static $INSTANCE;
 
-    public function __construct($db)
+    public static function getInstance(){
+        if(!isset(self::$INSTANCE)){
+            self::$INSTANCE = new ProdutosController();
+        }
+        return self::$INSTANCE;
+    }
+
+    public function __construct()
     {
-        $this->pedidos = new Pedidos($db);
+        $this->pedidos = new Pedidos(Database::getInstance());
     }
 
     public function list()

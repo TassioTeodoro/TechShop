@@ -1,25 +1,39 @@
 <?php
-
 class Router
 {
-    private $routes = [];
+    static $INSTANCE;
+    var $routes = [];
 
-    public function add($method, $path, $callback)
-    {
-        $path = preg_replace('/\{(\w+)\}/', '(\d+)', $path);
-        $this->routes[] = ['method' => $method, 'path' => "#^" . $path . "$#", 'callback' => $callback];
+    public function add($method, $path, $handler){
+        self::getInstance()->routes[$path][$method] = $handler;
     }
 
-    public function dispatch($requestedPath)
-    {
-        $requestedMethod = $_SERVER["REQUEST_METHOD"];
+    public function process(){
+        header("Content-Type: application/json");
+        $path = $_SERVER["PATH_INFO"];
+        $method = $_SERVER["REQUEST_METHOD"];
 
-        foreach ($this->routes as $route) {
-            if ($route['method'] === $requestedMethod && preg_match($route['path'], $requestedPath, $matches)) {
-                array_shift($matches);
-                return call_user_func($route['callback'], $matches[0]);
-            }
+        $handler = self::getInstance()->routes[$path][$method];
+        if($handler == null){
+            http_response_code(404);
+            echo json_encode([
+                "error" => "NOT_FOUND",
+                "msg" => "Path '$path' not found for method $method"
+            ]);
+            return;
         }
-        echo "404 - Página não encontrada";
+
+
+        $handler();
+    }
+    /**
+     * @return Router
+     */
+    public static function getInstance()
+    {
+        if(self::$INSTANCE == null){
+            self::$INSTANCE = new Router();
+        }
+        return self::$INSTANCE;
     }
 }
