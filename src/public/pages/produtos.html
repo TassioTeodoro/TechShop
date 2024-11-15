@@ -12,21 +12,21 @@
 <body>
     <div class="container">
         <header>
-            <h1>Cadastrar Novo Produto</h1>
+            <h1>Cadastrar um Produto</h1>
         </header>
         <main>
             <form>
-                <label for="nome">Nome:</label>
-                <input type="text" id="nome" placeholder="Ex: Teclado Gamer" required>
+                <label for="name">Nome:</label>
+                <input type="text" id="name" placeholder="Ex: Teclado Gamer" required>
 
                 <label for="descricao">Descrição:</label>
-                <input type="text" id="descricao" placeholder="Ex: Teclado RGB com iluminação LED" required>
+                <input type="text" id="descricao" placeholder="Ex: Teclado RGB" required>
 
                 <label for="quantidade">Quantidade:</label>
                 <input type="number" id="quantidade" placeholder="Ex: 10" required>
 
                 <label for="preco">Preço:</label>
-                <input type="number" id="preco" placeholder="Ex: 150.00" step="0.01" required>
+                <input type="number" id="preco" placeholder="Ex: R$150.00" step="0.01" required>
 
                 <button type="button" onclick="detectType()">Salvar Produto</button>
             </form>

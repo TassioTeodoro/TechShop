@@ -19,5 +19,7 @@ public static function getInstance()
         }
     }
     return self::$instance;
+    
 }
+
 }
