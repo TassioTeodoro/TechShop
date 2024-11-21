@@ -10,19 +10,18 @@ class Pedidos
         $this->conn = $db;
     }
 
-    public function create($id_produto, $quantidade, $data_pedido)
+    public function create($id_produtos, $quantidade )
     {
-        $sql = "INSERT INTO pedidos (id_produto,quantidade,data_pedido) VALUES (:id_produto, :quantidade, :data_pedido)";
+        $sql = "INSERT INTO pedidos (id_produto,quantidade) VALUES (:id_produtos, :quantidade)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':id_produto', $id_produto);
+        $stmt->bindParam(':id_produtos', $id_produtos);
         $stmt->bindParam(':quantidade', $quantidade);
-        $stmt->bindParam(':data_pedido', $data_pedido);
         return $stmt->execute();
     }
 
     public function list()
     {
-        $sql = "SELECT * FROM pedidos";
+        $sql = "SELECT pro.name, ped.quantidade, pro.preco FROM pedidos ped join produtos pro on pro.id = ped.id_produto";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -37,14 +36,22 @@ class Pedidos
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update($id,$id_produto,$quantidade, $data_pedido)
+    public function getByProdutoId($id)
     {
-        $sql = "UPDATE pedidos SET id_produto = :id_produto, quantidade = :quantidade, data_pedido = :data_pedido  WHERE id = :id";
+        $sql = "SELECT * FROM pedidos WHERE id_produtos = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':id_produto', $id_produto);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function update($id,$id_produtos,$quantidade)
+    {
+        $sql = "UPDATE pedidos SET id_produtos = :id_produtos, quantidade = :quantidade  WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id_produtos', $id_produtos);
         $stmt->bindParam(':quantidade', $quantidade);
-        $stmt->bindParam(':data_pedido', $data_pedido);
         $stmt->execute();
         return $stmt->rowCount();
     }

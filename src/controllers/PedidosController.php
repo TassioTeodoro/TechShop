@@ -8,7 +8,7 @@ class PedidosController
 
     public static function getInstance(){
         if(!isset(self::$INSTANCE)){
-            self::$INSTANCE = new ProdutosController();
+            self::$INSTANCE = new PedidosController();
         }
         return self::$INSTANCE;
     }
@@ -22,14 +22,16 @@ class PedidosController
     {
         $pedidos = $this->pedidos->list();
         echo json_encode($pedidos);
+
+        http_response_code(200);
     }
 
     public function create()
     {
         $data = json_decode(file_get_contents("php://input"));
-        if (isset($data->id_produto) && isset($data->quantidade)&& isset($data->data_pedido)) {
+        if (isset($data->produto_id) && isset($data->quantidade)) {
             try {
-                $this->pedidos->create($data->id_produto, $data->quantidade, $data->data_pedido);
+                $this->pedidos->create($data->produto_id, $data->quantidade);
                 
                 http_response_code(201);
                 echo json_encode(["message" => "Pedido criado com sucesso."]);
@@ -64,12 +66,33 @@ class PedidosController
         }
     }
 
+    public function getByProdutoId($id)
+    {
+        if (isset($id)) {
+            try {
+                $pedidos = $this->pedidos->getByProdutoId($id);
+                if ($pedidos) {
+                    echo json_encode($pedidos);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(["message" => "Cadastro não encontrado"]);
+                }
+            } catch (\Throwable $th) {
+                http_response_code(500);
+                echo json_encode(["message" => "Erro ao buscar cadastro"]);
+            }
+        } else {
+            http_response_code(400);
+            echo json_encode(["message" => "Dados incompletos."]);
+        }
+    }
+
     public function update()
     {
         $data = json_decode(file_get_contents("php://input"));
-        if (isset($data->id) && isset($data->id_produto) && isset($data->quantidade) && isset($data->data_pedido)) {
+        if (isset($data->id) && isset($data->id_produtos) && isset($data->quantidade)) {
             try {
-                $count = $this->pedidos->update($data->id, $data->id_produto, $data->quantidade, $data->data_pedido);
+                $count = $this->pedidos->update($data->id, $data->id_produtos, $data->quantidade);
                 if ($count > 0) {
                     http_response_code(200);
                     echo json_encode(["message" => "Pedido atualizado com sucesso."]);

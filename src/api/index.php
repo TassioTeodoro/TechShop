@@ -7,8 +7,6 @@ require_once 'src/Router.php';
 $router = Router::getInstance();
 
 $router->add('GET', '/produtos', function () { 
-    echo json_encode(["status" => "ok", "message" => "Rota GET /produtos funcionando!"]);
-    
     if (isset($_GET["id"])) {
         ProdutosController::getInstance()->getById($_GET["id"]);
     } else {
@@ -17,17 +15,14 @@ $router->add('GET', '/produtos', function () {
 });
 
 $router->add('POST', '/produtos', function () { 
-    echo json_encode(["status" => "ok", "message" => "Rota POST /produtos funcionando!"]);
     ProdutosController::getInstance()->create();
 });
 
 $router->add('DELETE', '/produtos', function () { 
-    echo json_encode(["status" => "ok", "message" => "Rota DELETE /produtos funcionando!"]);
     ProdutosController::getInstance()->delete();
 });
 
 $router->add('PUT', '/produtos', function () { 
-    echo json_encode(["status" => "ok", "message" => "Rota PUT /produtos funcionando!"]);
     ProdutosController::getInstance()->update();
 });
 
@@ -40,9 +35,25 @@ $router->add('GET', '/pedidos', function () {
     }
 });
 
-$router->add('POST', '/pedidos', function () { PedidosController::getInstance()->create();});
-$router->add('DELETE', '/pedidos', function () { PedidosController::getInstance()->delete();});
-$router->add('PUT', '/pedidos', function () { PedidosController::getInstance()->update();});
+$router->add('GET', '/pedidos/produtos', function () { 
+    if(isset($_GET["id"])){
+        PedidosController::getInstance()->getByProdutoId($_GET["id"]);
+    }else {
+        echo json_encode([
+            "msg" => "Parametro Id do produto não presente"
+        ]);
+    }
+});
+
+$router->add('POST', '/pedidos', function () { 
+    PedidosController::getInstance()->create();
+});
+$router->add('DELETE', '/pedidos', function () { 
+    PedidosController::getInstance()->delete();
+});
+$router->add('PUT', '/pedidos', function () { 
+    PedidosController::getInstance()->update();
+});
 
 Router::getInstance()->process();
 

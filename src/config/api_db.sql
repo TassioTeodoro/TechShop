@@ -14,6 +14,6 @@ CREATE TABLE pedidos (
     id SERIAL PRIMARY KEY,
     id_produto INT NOT NULL,
     quantidade INT NOT NULL,
-    data_pedido DATE NOT NULL,
+
     FOREIGN KEY (id_produto) REFERENCES produtos(id)
 );

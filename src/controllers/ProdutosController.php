@@ -23,6 +23,8 @@ class ProdutosController
     {
         $produtos = $this->produtos->list();
         echo json_encode($produtos);
+
+        http_response_code(200);
     }
 
     public function create()
@@ -35,7 +37,6 @@ class ProdutosController
                 http_response_code(201);
                 echo json_encode(["message" => "Produto criado com sucesso."]);
             } catch (\Throwable $th) {
-                print_r($th);
                 http_response_code(500);
                 echo json_encode(["message" => "Erro ao criar o produto."]);
                 
@@ -93,14 +94,14 @@ class ProdutosController
     public function delete()
     {
         $data = json_decode(file_get_contents("php://input"));
-        if (isset($id)) {
+        if (isset($data->id)) {
             try {
-                $count = $this->produtos->delete($id);
+                $count = $this->produtos->delete($data->id);
                 if ($count > 0) {
                     http_response_code(200);
                     echo json_encode(["message" => "Produto deletado com sucesso."]);
                 } else {
-                    http_response_code(500);
+                    http_response_code(404);
                     echo json_encode(["message" => "Erro ao deletar o produto."]);
                 }
             } catch (\Throwable $th) {
